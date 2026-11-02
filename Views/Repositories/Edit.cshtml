@@ -1,0 +1,35 @@
+@model BuildWorkflowRelease.Models.Entities.RepositoryConfig
+@{
+    ViewData["Title"] = "Edit Repository";
+}
+<div class="gc-card">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Git URL</label>
+        <input asp-for="GitUrl" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Branch</label>
+        <input asp-for="Branch" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Local Path</label>
+        <input asp-for="LocalPath" class="form-control" readonly />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Username (optional)</label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Access Token (leave blank to keep)</label>
+        <input type="password" name="plainToken" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

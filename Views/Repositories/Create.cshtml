@@ -1,0 +1,34 @@
+@model BuildWorkflowRelease.Models.Entities.RepositoryConfig
+@{
+    ViewData["Title"] = "New Repository";
+}
+<div class="gc-card">
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Git URL</label>
+        <input asp-for="GitUrl" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Branch</label>
+        <input asp-for="Branch" class="form-control" value="main" />
+    </div>
+    <input type="hidden" asp-for="LocalPath" />
+    <div class="mb-3 text-muted">
+        Repository data will be cloned into a temporary folder automatically.
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Username (optional)</label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Access Token (optional)</label>
+        <input type="password" name="plainToken" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

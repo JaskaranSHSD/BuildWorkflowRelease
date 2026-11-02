@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Login";
+}
+<div style="max-width:420px;margin:60px auto;">
+  <div class="gc-card">
+    <h2>Sign in</h2>
+    @if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+    <form asp-controller="Account" asp-action="Login" method="post">
+      @Html.AntiForgeryToken()
+      <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+      <div class="form-group">
+        <label>Username or Email</label>
+        <input class="form-control" type="text" name="usernameOrEmail" required autofocus />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" name="password" required />
+      </div>
+      <button class="btn btn-primary" type="submit">Sign in</button>
+      <a class="btn btn-link" asp-controller="SSO" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl">Sign in with SSO</a>
+    </form>
+    @if (!ViewData.ModelState.IsValid)
+    {
+      <div class="text-danger mt-2">
+        @foreach (var e in ViewData.ModelState.Values.SelectMany(v => v.Errors)) { <div>@e.ErrorMessage</div> }
+      </div>
+    }
+  </div>
+</div>

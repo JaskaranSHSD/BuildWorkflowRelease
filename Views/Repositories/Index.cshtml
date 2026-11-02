@@ -1,0 +1,33 @@
+@model IEnumerable<BuildWorkflowRelease.Models.Entities.RepositoryConfig>
+@{
+    ViewData["Title"] = "Repositories";
+}
+<div class="gc-card">
+<p>
+    <a asp-action="Create" class="btn btn-primary">New Repository</a>
+    <form asp-action="CleanAllData" method="post" style="display:inline">
+        <button class="btn btn-warning" onclick="return confirm('Delete all cloned repository data in temp?')">Clean All Repo Data</button>
+    </form>
+</p>
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>URL</th><th>Branch</th><th>Local Path</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var r in Model) {
+        <tr>
+            <td>@r.Name</td><td>@r.GitUrl</td><td>@r.Branch</td><td>@r.LocalPath</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@r.Id" class="btn btn-sm btn-secondary">Edit</a>
+                <form asp-action="CleanData" asp-route-id="@r.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-warning" onclick="return confirm('Delete cloned data?')">Clean Data</button>
+                </form>
+                <form asp-action="Delete" asp-route-id="@r.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>

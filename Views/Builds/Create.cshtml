@@ -1,0 +1,19 @@
+@model BuildWorkflowRelease.Models.Entities.BuildConfig
+@{
+    ViewData["Title"] = "New Build";
+}
+<div class="gc-card">
+<form asp-action="Create" method="post">
+    <div class="mb-3"><label class="form-label">Name</label><input asp-for="Name" class="form-control" /></div>
+    <div class="mb-3">
+        <label class="form-label">Repository</label>
+        <select asp-for="RepositoryId" class="form-control" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Repositories, "Id", "Name"))"></select>
+    </div>
+    <div class="mb-3"><label class="form-label">Build Command</label><input asp-for="BuildCommand" class="form-control" value="dotnet build" /></div>
+    <div class="mb-3"><label class="form-label">Working Directory (relative or absolute)</label><input asp-for="WorkingDirectory" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Output Path</label><input asp-for="OutputPath" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Artifact Glob</label><input asp-for="ArtifactGlob" class="form-control" value="**/*" /></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

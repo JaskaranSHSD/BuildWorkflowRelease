@@ -1,0 +1,27 @@
+@model BuildWorkflowRelease.Models.Entities.ReleaseProfile
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+<div class="gc-card">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3"><label class="form-label">Name</label><input asp-for="Name" class="form-control" /></div>
+    <div class="mb-3">
+        <label class="form-label">Build Config</label>
+        <select asp-for="BuildConfigId" class="form-control" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Builds, "Id", "Name"))"></select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">SFTP Config</label>
+        <select asp-for="SftpConfigId" class="form-control" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Sftp, "Id", "Name"))"></select>
+    </div>
+    <div class="form-check mb-2"><input asp-for="AutoPull" class="form-check-input" /><label class="form-check-label">Auto Pull</label></div>
+    <div class="form-check mb-2"><input asp-for="AutoBuild" class="form-check-input" /><label class="form-check-label">Auto Build</label></div>
+    <div class="form-check mb-2"><input asp-for="AutoUpload" class="form-check-input" /><label class="form-check-label">Auto Upload</label></div>
+    <div class="mb-3">
+        <label class="form-label">Post-Run Commands on SFTP/SSH host (comma-separated, optional)</label>
+        <textarea asp-for="PostRunCommands" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

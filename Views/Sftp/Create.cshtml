@@ -1,0 +1,18 @@
+@model BuildWorkflowRelease.Models.Entities.SftpConfig
+@{
+    ViewData["Title"] = "New SFTP";
+}
+<div class="gc-card">
+<form asp-action="Create" method="post">
+    <div class="mb-3"><label class="form-label">Name</label><input asp-for="Name" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Host</label><input asp-for="Host" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Port</label><input asp-for="Port" class="form-control" value="22" /></div>
+    <div class="mb-3"><label class="form-label">Username</label><input asp-for="Username" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Password (optional if key)</label><input type="password" name="plainPassword" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Private Key Path (optional)</label><input asp-for="PrivateKeyPath" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Private Key Passphrase (optional)</label><input type="password" name="plainPassphrase" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Remote Path</label><input asp-for="RemotePath" class="form-control" value="/" /></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

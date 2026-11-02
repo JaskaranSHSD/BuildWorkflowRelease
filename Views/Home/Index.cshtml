@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var checks = ViewBag.HealthChecks as List<BuildWorkflowRelease.Models.Entities.ApiHealthCheck> ?? new();
+}
+<div class="gc-card">
+    <h3>Build & Release Dashboard</h3>
+    <p class="text-muted">Manage repositories, builds, SFTP targets, release profiles, and runs.</p>
+</div>
+
+<div class="gc-grid">
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">source</span>
+        <h4>Repositories</h4><p>Configure Git sources and local clone paths.</p>
+        <a asp-controller="Repositories" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">build</span>
+        <h4>Builds</h4><p>Define build commands and artifact globs.</p>
+        <a asp-controller="Builds" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">cloud_sync</span>
+        <h4>SFTP Targets</h4><p>Configure upload destinations.</p>
+        <a asp-controller="Sftp" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">tune</span>
+        <h4>Release Profiles</h4><p>Combine build + SFTP with auto steps.</p>
+        <a asp-controller="Profiles" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">rocket_launch</span>
+        <h4>Release Runs</h4><p>Monitor release history and logs.</p>
+        <a asp-controller="Releases" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+    <div><div class="gc-card">
+        <span class="material-icons" style="color:#1a73e8;font-size:32px">monitor_heart</span>
+        <h4>API Health</h4><p>Monitor API endpoints and recovery.</p>
+        <a asp-controller="HealthChecks" asp-action="Index" class="btn btn-primary btn-sm">Open</a>
+    </div></div>
+</div>
+
+@if (checks.Any()) {
+    <div class="gc-card">
+        <h3>API Health Status</h3>
+        <div class="gc-grid">
+        @foreach (var c in checks) {
+            var unhealthy = c.LastCheckedAt != null && !c.LastHealthy;
+            <div class="gc-card @(unhealthy ? "gc-status-unhealthy" : (c.LastCheckedAt == null ? "" : "gc-status-healthy"))">
+                <h4>@c.Name</h4>
+                <p>@c.Url</p>
+                <p><strong>Status:</strong>
+                    @if (c.LastCheckedAt == null) { <span class="gc-chip">Never checked</span> }
+                    else if (c.LastHealthy) { <span style="color:#1e8e3e;font-weight:500">Healthy</span> }
+                    else { <span style="color:#d93025;font-weight:700">FAILED</span> }
+                </p>
+                <p class="text-muted" style="font-size:12px">Last checked: @c.LastCheckedAt</p>
+                @if (!string.IsNullOrEmpty(c.LastError)) { <p style="color:#d93025;font-size:12px">@c.LastError</p> }
+            </div>
+        }
+        </div>
+    </div>
+}

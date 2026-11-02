@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "SSO Token";
+}
+<div style="max-width:420px;margin:60px auto;">
+  <div class="gc-card">
+    <h2>SSO Token Entry</h2>
+    <form asp-controller="SSO" asp-action="Callback" method="post">
+      @Html.AntiForgeryToken()
+      <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+      <div class="form-group">
+        <label>Token</label>
+        <input class="form-control" type="text" name="token" required />
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+</div>

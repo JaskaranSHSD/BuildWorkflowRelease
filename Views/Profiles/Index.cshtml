@@ -1,0 +1,31 @@
+@model IEnumerable<BuildWorkflowRelease.Models.Entities.ReleaseProfile>
+@{
+    ViewData["Title"] = "Release Profiles";
+}
+<p><a asp-action="Create" class="btn btn-primary">New Profile</a></p>
+<div class="gc-card">
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Build</th><th>SFTP</th><th>Steps</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var p in Model) {
+        <tr>
+            <td>@p.Name</td><td>@p.BuildConfig?.Name</td><td>@p.SftpConfig?.Name</td>
+            <td>
+                @(p.AutoPull?"Pull ":"")@(p.AutoBuild?"Build ":"")@(p.AutoUpload?"Upload":"")
+            </td>
+            <td>
+                <form asp-action="StartRelease" asp-route-id="@p.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-success">Run Release</button>
+                </form>
+                <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-secondary">Edit</a>
+                <form asp-action="Delete" asp-route-id="@p.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>

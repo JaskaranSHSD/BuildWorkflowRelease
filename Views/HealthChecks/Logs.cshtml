@@ -1,0 +1,28 @@
+@model List<BuildWorkflowRelease.Models.Entities.HealthCheckLog>
+@{
+    var check = ViewBag.Check as BuildWorkflowRelease.Models.Entities.ApiHealthCheck;
+    ViewData["Title"] = "Health Check Logs - " + check?.Name;
+}
+<div class="gc-card">
+    <h3>Logs for @check?.Name</h3>
+    <p>@check?.Url</p>
+</div>
+<div class="gc-card">
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Time</th><th>Status</th><th>HTTP</th><th>Response</th><th>Message</th></tr></thead>
+    <tbody>
+    @foreach (var l in Model) {
+        <tr>
+            <td>@l.CheckedAt</td>
+            <td>@(l.Healthy ? "Healthy" : "Unhealthy")</td>
+            <td>@l.StatusCode</td>
+            <td><pre style="white-space:pre-wrap;max-width:300px">@l.ResponseSnippet</pre></td>
+            <td>@l.Message</td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>
+<p><a asp-action="Index" class="btn btn-secondary">Back</a></p>

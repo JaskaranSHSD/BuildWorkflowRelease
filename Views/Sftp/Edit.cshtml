@@ -1,0 +1,19 @@
+@model BuildWorkflowRelease.Models.Entities.SftpConfig
+@{
+    ViewData["Title"] = "Edit SFTP";
+}
+<div class="gc-card">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3"><label class="form-label">Name</label><input asp-for="Name" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Host</label><input asp-for="Host" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Port</label><input asp-for="Port" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Username</label><input asp-for="Username" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Password (leave blank to keep)</label><input type="password" name="plainPassword" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Private Key Path</label><input asp-for="PrivateKeyPath" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Private Key Passphrase (leave blank to keep)</label><input type="password" name="plainPassphrase" class="form-control" /></div>
+    <div class="mb-3"><label class="form-label">Remote Path</label><input asp-for="RemotePath" class="form-control" /></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+</div>

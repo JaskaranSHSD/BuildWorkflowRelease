@@ -1,0 +1,29 @@
+@model IEnumerable<BuildWorkflowRelease.Models.Entities.BuildConfig>
+@{
+    ViewData["Title"] = "Build Configs";
+}
+<p><a asp-action="Create" class="btn btn-primary">New Build</a></p>
+<div class="gc-card">
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Repository</th><th>Command</th><th>Output</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var b in Model) {
+        <tr>
+            <td>@b.Name</td><td>@b.Repository?.Name</td><td>@b.BuildCommand</td><td>@b.OutputPath</td>
+            <td>
+                <form asp-action="Run" asp-route-id="@b.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-success">Run Build</button>
+                </form>
+                <a asp-action="Logs" asp-route-id="@b.Id" class="btn btn-sm btn-secondary">View Logs</a>
+                <a asp-action="Edit" asp-route-id="@b.Id" class="btn btn-sm btn-secondary">Edit</a>
+                <form asp-action="Delete" asp-route-id="@b.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>

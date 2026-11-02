@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>@ViewData["Title"] - BuildWorkflowRelease</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+@{
+    var ctrl = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    bool Active(string c) => string.Equals(ctrl, c, StringComparison.OrdinalIgnoreCase);
+    bool HideSidebar = string.Equals(ctrl, "Account", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(ctrl, "SSO", StringComparison.OrdinalIgnoreCase);
+}
+<header class="gc-appbar">
+    @if (HideSidebar)
+    {
+        <a class="gc-brand" asp-controller="Home" asp-action="Index">
+            <span class="material-icons">cloud_upload</span>
+            BuildWorkflowRelease
+        </a>
+    }
+    else
+    {
+        <button class="gc-icon-btn" type="button" aria-label="Menu"><span class="material-icons">menu</span></button>
+        <a class="gc-brand" asp-controller="Home" asp-action="Index">
+            <span class="material-icons">cloud_upload</span>
+            BuildWorkflowRelease
+        </a>
+        <div class="gc-search">
+            <input type="text" placeholder="Search resources, docs..." />
+        </div>
+        <div class="gc-actions">
+            <button class="gc-icon-btn" aria-label="Help"><span class="material-icons">help_outline</span></button>
+            <button class="gc-icon-btn" aria-label="Notifications"><span class="material-icons">notifications_none</span></button>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <span class="gc-user">@User.Identity.Name</span>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button class="gc-icon-btn" aria-label="Logout" type="submit"><span class="material-icons">logout</span></button>
+                </form>
+            }
+            else
+            {
+                <a class="gc-icon-btn" aria-label="Login" asp-controller="Account" asp-action="Login"><span class="material-icons">login</span></a>
+            }
+        </div>
+    }
+</header>
+
+@if (!HideSidebar) {
+<aside class="gc-sidenav">
+    <div class="gc-section-title">Release</div>
+    <a class="gc-nav-item @(Active("Home") ? "active" : "")" asp-controller="Home" asp-action="Index">
+        <span class="material-icons">dashboard</span> Dashboard
+    </a>
+    <a class="gc-nav-item @(Active("Repositories") ? "active" : "")" asp-controller="Repositories" asp-action="Index">
+        <span class="material-icons">source</span> Repositories
+    </a>
+    <a class="gc-nav-item @(Active("Builds") ? "active" : "")" asp-controller="Builds" asp-action="Index">
+        <span class="material-icons">build</span> Builds
+    </a>
+    <a class="gc-nav-item @(Active("Sftp") ? "active" : "")" asp-controller="Sftp" asp-action="Index">
+        <span class="material-icons">cloud_sync</span> SFTP Targets
+    </a>
+    <div class="gc-section-title">Orchestration</div>
+    <a class="gc-nav-item @(Active("Profiles") ? "active" : "")" asp-controller="Profiles" asp-action="Index">
+        <span class="material-icons">tune</span> Release Profiles
+    </a>
+    <a class="gc-nav-item @(Active("Releases") ? "active" : "")" asp-controller="Releases" asp-action="Index">
+        <span class="material-icons">rocket_launch</span> Release Runs
+    </a>
+    <div class="gc-section-title">Monitoring</div>
+    <a class="gc-nav-item @(Active("HealthChecks") ? "active" : "")" asp-controller="HealthChecks" asp-action="Index">
+        <span class="material-icons">monitor_heart</span> API Health
+    </a>
+</aside>
+}
+
+<main class="gc-main">
+    @if (ViewData["Title"] != null) {
+        <div class="gc-page-header">
+            <h1 class="gc-page-title">@ViewData["Title"]</h1>
+        </div>
+    }
+    @RenderBody()
+</main>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

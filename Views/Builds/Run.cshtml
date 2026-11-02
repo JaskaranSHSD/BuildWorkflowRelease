@@ -1,0 +1,24 @@
+@model BuildWorkflowRelease.Controllers.BuildRunViewModel
+@{
+    ViewData["Title"] = "Build Run - " + Model.Name;
+}
+<div class="gc-card">
+    <h3>Build Run: @Model.Name</h3>
+    <p><strong>Status:</strong> @(Model.Success ? "Success" : "Failed")</p>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage)) {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+    @if (Model.Artifacts != null && Model.Artifacts.Any()) {
+        <h4>Artifacts</h4>
+        <ul>
+        @foreach (var a in Model.Artifacts) { <li>@a</li> }
+        </ul>
+    }
+</div>
+<div class="gc-card">
+    <h4>Logs</h4>
+    <div style="background:#111;color:#eee;padding:10px;font-family:monospace;max-height:500px;overflow:auto;">
+    @foreach (var l in Model.Logs) { <div>@l</div> }
+    </div>
+</div>
+<p><a asp-action="Index" class="btn btn-secondary">Back to Builds</a></p>

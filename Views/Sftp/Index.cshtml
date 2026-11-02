@@ -1,0 +1,25 @@
+@model IEnumerable<BuildWorkflowRelease.Models.Entities.SftpConfig>
+@{
+    ViewData["Title"] = "SFTP Configs";
+}
+<p><a asp-action="Create" class="btn btn-primary">New SFTP</a></p>
+<div class="gc-card">
+<div class="table-responsive">
+<table class="table">
+    <thead><tr><th>Name</th><th>Host</th><th>Port</th><th>User</th><th>Remote Path</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var s in Model) {
+        <tr>
+            <td>@s.Name</td><td>@s.Host</td><td>@s.Port</td><td>@s.Username</td><td>@s.RemotePath</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-secondary">Edit</a>
+                <form asp-action="Delete" asp-route-id="@s.Id" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>
